@@ -14,19 +14,19 @@ vector<int> getInputs (string input) {
     return numbers;
 }
 
-int* getArray(string input, int size) {
-    int array[size];
+vector<int> getArray(string input, int size) {
+    vector<int> array;
     string s;
     int aux = 0;
     istringstream stringStream(input);
     while(getline(stringStream, s, ' ' )) {
-        array[aux] = (stoi(s));
+        array.push_back(stoi(s));
         aux +=1;
     }
     return array;
 }
 
-int bSearch(int* array, int size, int query) {
+int bSearch(vector<int> array, int size, int query) {
     int middle = size / 2;
     if (array[middle] == query) {
         return middle;
@@ -34,18 +34,18 @@ int bSearch(int* array, int size, int query) {
     if (size == 0) {
         return -1;
     }
-    if (array[size / 2] < query) {
-        int halfArray[middle];
+    if (array[middle] > query) {
+        vector<int> halfArray;
         for(int i = 0; i < middle; i++ ) {
-            halfArray[i] = array[i];
+            halfArray.push_back(array[i]);
         }
-        return bSearch(halfArray, middle, query);
+        return bSearch(halfArray, halfArray.size(), query);
     } else {
-        int halfArray[middle];
+        vector<int> halfArray;
         for(int i = middle; i < size; i++ ) {
-            halfArray[i] = array[i];
+            halfArray.push_back(array[i]);
         }
-        return bSearch(halfArray, middle, query);
+        return bSearch(halfArray, halfArray.size(), query);
     }
 
 }
@@ -53,7 +53,7 @@ int bSearch(int* array, int size, int query) {
 int main () {
     string numbers, inputArray;
     vector<int> myNumbers, positions;
-    int* array;
+    vector<int> array;
 
     getline(cin, numbers);
     getline(cin, inputArray);
