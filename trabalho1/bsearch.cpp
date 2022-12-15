@@ -27,11 +27,27 @@ int* getArray(string input, int size) {
 }
 
 int bSearch(int* array, int size, int query) {
-    int position;
-    
+    int middle = size / 2;
+    if (array[middle] == query) {
+        return middle;
+    }
+    if (size == 0) {
+        return -1;
+    }
+    if (array[size / 2] < query) {
+        int halfArray[middle];
+        for(int i = 0; i < middle; i++ ) {
+            halfArray[i] = array[i];
+        }
+        return bSearch(halfArray, middle, query);
+    } else {
+        int halfArray[middle];
+        for(int i = middle; i < size; i++ ) {
+            halfArray[i] = array[i];
+        }
+        return bSearch(halfArray, middle, query);
+    }
 
-
-    return position;
 }
 
 int main () {
