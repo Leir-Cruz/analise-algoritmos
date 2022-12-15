@@ -26,26 +26,18 @@ vector<int> getArray(string input, int size) {
     return array;
 }
 
-int bSearch(vector<int> array, int size, int query) {
-    int middle = size / 2;
+int bSearch(vector<int> array, int startArray, int endArray, int query) {
+    int middle = (startArray + endArray) / 2;
     if (array[middle] == query) {
         return middle;
     }
-    if (size == 0) {
+    if (startArray == endArray) {
         return -1;
     }
     if (array[middle] > query) {
-        vector<int> halfArray;
-        for(int i = 0; i < middle; i++ ) {
-            halfArray.push_back(array[i]);
-        }
-        return bSearch(halfArray, halfArray.size(), query);
+        return bSearch(array, startArray,middle - 1, query);
     } else {
-        vector<int> halfArray;
-        for(int i = middle; i < size; i++ ) {
-            halfArray.push_back(array[i]);
-        }
-        return bSearch(halfArray, halfArray.size(), query);
+        return bSearch(array, middle + 1, endArray, query);
     }
 
 }
@@ -64,7 +56,7 @@ int main () {
     for(int i = 0; i < myNumbers[1]; i++) {
         string query;
         getline(cin, query);
-        positions.push_back(bSearch(array, myNumbers[0], stoi(query)));
+        positions.push_back(bSearch(array, 0,myNumbers[0], stoi(query)));
 
     }
 
