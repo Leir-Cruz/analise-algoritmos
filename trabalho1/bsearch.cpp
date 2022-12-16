@@ -15,19 +15,21 @@ vector<int> getInputs (string input) {
 }
 
 
-int bSearch(int* array, int startArray, int endArray, int query) {
-    int middle = (startArray + endArray) / 2;
-    if (array[middle] == query) {
-        return middle;
+int bSearch(int* array, int size, int query) {
+    int startArray = 0;
+    int endArray = size;
+    while(startArray <= endArray) {
+        int middle = (startArray + endArray) / 2;
+        if (array[middle] == query) {
+            return middle;
+        }
+        if (array[middle] > query) {
+            endArray = middle - 1;
+        } else {
+            startArray = middle + 1;
+        }
     }
-    if (startArray == endArray) {
-        return -1;
-    }
-    if (array[middle] > query) {
-        return bSearch(array, startArray,middle - 1, query);
-    } else {
-        return bSearch(array, middle + 1, endArray, query);
-    }
+    return -1;
 
 }
 
@@ -40,7 +42,6 @@ int main () {
 
     myNumbers = getInputs(numbers);
     int array[myNumbers[0]];
-    int positions[myNumbers[1]];
 
     string s;
     int aux;
@@ -50,16 +51,11 @@ int main () {
         aux += 1;
     }
 
-
     for(int i = 0; i < myNumbers[1]; i++) {
         string query;
         getline(cin, query);
-        positions[i] = bSearch(array, 0,myNumbers[0], stoi(query));
-
+        cout << bSearch(array, myNumbers[0], stoi(query)) << endl;
     }
 
-    for (int i = 0; i < myNumbers[1]; i++) {
-        cout << positions[i] << endl;
-    }
     return 0;
 }
