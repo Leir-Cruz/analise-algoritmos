@@ -14,19 +14,8 @@ vector<int> getInputs (string input) {
     return numbers;
 }
 
-vector<int> getArray(string input, int size) {
-    vector<int> array;
-    string s;
-    int aux = 0;
-    istringstream stringStream(input);
-    while(getline(stringStream, s, ' ' )) {
-        array.push_back(stoi(s));
-        aux +=1;
-    }
-    return array;
-}
 
-int bSearch(vector<int> array, int startArray, int endArray, int query) {
+int bSearch(int* array, int startArray, int endArray, int query) {
     int middle = (startArray + endArray) / 2;
     if (array[middle] == query) {
         return middle;
@@ -44,23 +33,32 @@ int bSearch(vector<int> array, int startArray, int endArray, int query) {
 
 int main () {
     string numbers, inputArray;
-    vector<int> myNumbers, positions;
-    vector<int> array;
+    vector<int> myNumbers;
 
     getline(cin, numbers);
     getline(cin, inputArray);
 
     myNumbers = getInputs(numbers);
-    array = getArray(inputArray, myNumbers[0]);
+    int array[myNumbers[0]];
+    int positions[myNumbers[1]];
+
+    string s;
+    int aux;
+    istringstream stringStream(inputArray);
+    while(getline(stringStream, s, ' ' )) {
+        array[aux] = stoi(s);
+        aux += 1;
+    }
+
 
     for(int i = 0; i < myNumbers[1]; i++) {
         string query;
         getline(cin, query);
-        positions.push_back(bSearch(array, 0,myNumbers[0], stoi(query)));
+        positions[i] = bSearch(array, 0,myNumbers[0], stoi(query));
 
     }
 
-    for (int i = 0; i < positions.size(); i++) {
+    for (int i = 0; i < myNumbers[1]; i++) {
         cout << positions[i] << endl;
     }
     return 0;
