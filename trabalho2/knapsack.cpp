@@ -3,7 +3,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int greedySolution (vector<int> weights, vector<int> values, vector<pair<float,int>> benefits, int capacity) {
+int greedySolutionFractional (vector<int> weights, vector<int> values, vector<pair<float,int>> benefits, int capacity) {
     int size = benefits.size();
     int total_value = 0;
     for(int i = 0; i < size; i++) {
@@ -13,8 +13,9 @@ int greedySolution (vector<int> weights, vector<int> values, vector<pair<float,i
             capacity -= weights[indexMaxValue];
             total_value += values[indexMaxValue];
         } else {
-            int fractionalValue = values[indexMaxValue] * (capacity / weights[indexMaxValue]);
+            int fractionalValue = values[indexMaxValue] * (float(capacity) / float(weights[indexMaxValue]));
             total_value += fractionalValue;
+            capacity = 0;
         }
     }
     return total_value;
@@ -30,20 +31,22 @@ int main() {
         int weight, value;
         cin >> weight >> value;
 
-        weightArray.push_back(weight);
-        valueArray.push_back(value);
-        benefitArray.push_back(make_pair(value/weight, i));
+        if(weight >= 0 && value >= 0) {
+            weightArray.push_back(weight);
+            valueArray.push_back(value);
+            benefitArray.push_back(make_pair(value/weight, i));
+        }
     }
 
     int weightArraySize = weightArray.size();
     int valueArraySize = valueArray.size();
 
-    if( valueArraySize != weightArraySize || valueArraySize != numberOfItems || weightArraySize != numberOfItems ) {
+    if( valueArraySize != weightArraySize) {
         return -1;
     }
 
     sort(benefitArray.rbegin(), benefitArray.rend());
-    int maxValue = greedySolution(weightArray, valueArray, benefitArray, sackSize);
+    int maxValue = greedySolutionFractional(weightArray, valueArray, benefitArray, sackSize);
 
     cout << maxValue;
 
