@@ -21,6 +21,25 @@ int greedySolutionFractional (vector<int> weights, vector<int> values, vector<pa
     return total_value;
 }
 
+int max(int numberA, int numberB) {
+    return numberA > numberB ? numberA : numberB;
+}
+
+int binarySolution (vector<int> weights, vector<int> values, int numberOfItems, int capacity) {
+    if (capacity == 0 || numberOfItems == 0) return 0;
+    if(weights[numberOfItems -1] > capacity) {
+        return binarySolution(weights, values, numberOfItems - 1, capacity);
+    } else {
+        return max(
+                values[numberOfItems -1] +
+                binarySolution(weights, values, numberOfItems -1, capacity - weights[numberOfItems - 1]),
+                binarySolution(weights, values, numberOfItems - 1, capacity)
+                );
+    }
+
+
+}
+
 int main() {
     int sackSize, numberOfItems;
     cin >> sackSize >> numberOfItems;
@@ -46,8 +65,9 @@ int main() {
     }
 
     sort(benefitArray.rbegin(), benefitArray.rend());
-    int maxValue = greedySolutionFractional(weightArray, valueArray, benefitArray, sackSize);
+    //int maxValue = greedySolutionFractional(weightArray, valueArray, benefitArray, sackSize);
 
+    int maxValue = binarySolution(weightArray, valueArray, numberOfItems, sackSize);
     cout << maxValue;
 
 
