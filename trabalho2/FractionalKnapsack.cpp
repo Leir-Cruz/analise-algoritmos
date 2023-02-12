@@ -70,7 +70,7 @@ int main() {
         if(weight >= 0 && value >= 0) {
             weightArray.push_back(weight);
             valueArray.push_back(value);
-            //benefitArray.push_back(make_pair(value/weight, i));
+            benefitArray.push_back(make_pair(value/weight, i));
         }
     }
 
@@ -81,10 +81,10 @@ int main() {
         return -1;
     }
 
-    //sort(benefitArray.rbegin(), benefitArray.rend());
-    //int maxValue = greedySolutionFractional(weightArray, valueArray, benefitArray, sackSize);
+    sort(benefitArray.rbegin(), benefitArray.rend());
+    int maxValue = greedySolutionFractional(weightArray, valueArray, benefitArray, sackSize);
     //int maxValue = RecursiveBinarySolution(weightArray, valueArray, numberOfItems, sackSize);
-    int maxValue = DinamycBinarySolution(weightArray, valueArray, numberOfItems, sackSize);
+    //int maxValue = DinamycBinarySolution(weightArray, valueArray, numberOfItems, sackSize);
     cout << maxValue;
 
 
