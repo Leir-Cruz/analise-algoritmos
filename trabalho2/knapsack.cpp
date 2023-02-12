@@ -5,20 +5,22 @@ using namespace std;
 int main() {
     int sackSize, numberOfItems;
     cin >> sackSize >> numberOfItems;
-    vector<int> itemsArray, weightArray;
+    vector<int> weightArray, valueArray;
+    vector<float> benefitArray;
 
     for(int i = 0; i < numberOfItems; i++) {
-        int item, weight;
-        cin >> item >> weight;
+        int weight, value;
+        cin >> weight >> value;
 
-        itemsArray.push_back(item);
         weightArray.push_back(weight);
+        valueArray.push_back(value);
+        benefitArray.push_back(item/weight);
     }
 
-    int itemsArraySize = itemsArray.size();
     int weightArraySize = weightArray.size();
+    int valueArraySize = valueArray.size();
 
-    if( itemsArraySize != weightArraySize || itemsArraySize != numberOfItems || weightArraySize != numberOfItems ) {
+    if( valueArraySize != weightArraySize || valueArraySize != numberOfItems || weightArraySize != numberOfItems ) {
         return -1;
     }
 
